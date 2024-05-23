@@ -1,0 +1,321 @@
+/* Importar fuente */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+nav {
+  background-color: rgb(0, 0, 0);
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #333;
+}
+
+label.logo {
+  color: white;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+nav ul.menu {
+  display: flex;
+  align-items: center;
+}
+
+nav ul.menu li {
+  margin: 0 10px;
+}
+
+nav ul.menu li a {
+  color: white;
+  font-size: 17px;
+  padding: 7px 13px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  transition: 0.5s;
+  font-weight: 600;
+}
+
+nav ul.menu li a:hover {
+  background: #ffffff;
+  color: black;
+}
+
+.btnBurger {
+  display: none;
+}
+
+.container {
+  display: flex;
+}
+
+aside {
+  max-width: 400px;
+  background-color: #0e0e0e;
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #333;
+  border-radius: 10px;
+  height: 700px; 
+  margin: 20px;
+}
+
+aside h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside ul li {
+  margin-bottom: 10px;
+}
+
+aside ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+aside ul li a:hover {
+  color: #f0a500;
+}
+
+main {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.cards,
+.secondary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px;
+}
+
+.card,
+.secondary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  width: 300px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: 0.4s;
+  padding: 10px;
+  border: 1px solid #333;
+}
+
+.card img,
+.secondary-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.card:hover,
+.secondary-card:hover {
+  transform: translateY(-5px);
+}
+
+.card .content,
+.secondary-card .content {
+  padding: 20px;
+}
+
+.card span,
+.secondary-card h3 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.card p,
+.secondary-card p {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 15px;
+}
+
+.card a,
+.secondary-card a {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #333;
+}
+
+.card a:hover,
+.secondary-card a:hover {
+  background-color: #ffffff;
+  color: black;
+}
+
+.secondary-news {
+  margin: 20px;
+}
+
+.secondary-news h2 {
+  margin: 10px 10px;
+  font-size: 40px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.divider {
+  border-top: 1px solid #333;
+}
+
+.ad-banner {
+  padding: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.ad-banner img {
+  width: 900px;
+  height: auto;
+  border-radius: 10px;
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
+}
+
+.ad-banner img:hover {
+  opacity: 0.3;
+}
+
+.ad-banner-msg::after {
+  content: "Esta publicidad es falsa";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.ad-banner:hover .ad-banner-msg::after {
+  opacity: 1;
+}
+
+@media (max-width: 920px) {
+  .menu {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+  }
+
+  .menu li {
+    margin: 20px 0;
+  }
+
+  .menu li a {
+    font-size: 20px;
+  }
+
+  .btnBurger {
+    display: block;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  aside {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  main {
+    margin: 20px 0;
+  }
+
+  .ad-banner img {
+    width: 600px;
+  }
+}
+
+@media (max-width: 630px) {
+  .card,
+  .secondary-card {
+    width: 100%;
+  }
+
+  .card img,
+  .secondary-card img {
+    height: 150px;
+  }
+
+  .card span,
+  .secondary-card h3 {
+    font-size: 18px;
+  }
+
+  .card p,
+  .secondary-card p {
+    font-size: 14px;
+  }
+
+  .card a,
+  .secondary-card a {
+    padding: 5px 10px;
+  }
+
+  .ad-banner img {
+    width: 400px;
+  }
+}
