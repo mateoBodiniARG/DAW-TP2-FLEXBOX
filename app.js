@@ -94,43 +94,16 @@ window.onload = function () {
     var data = {};
     var fields = form.elements;
 
-    for (var i = 0; i < fields.length; i++) {
-      var field = fields[i];
-      if (field.tagName === "INPUT") {
-        var errorElement = document.getElementById(field.id + "-error");
-        if (errorElement.textContent) {
-          hasError = true;
-        }
-        data[field.name] = field.value;
-      }
-    }
-
     var validators = [
-      {
-        field: fullName,
-        validator: validateFullName,
-        errorId: "full-name-error",
-      },
+      { field: fullName, validator: validateFullName, errorId: "full-name-error" },
       { field: email, validator: validateEmail, errorId: "email-error" },
-      {
-        field: password,
-        validator: validatePassword,
-        errorId: "password-error",
-      },
-      {
-        field: confirmPassword,
-        validator: validateConfirmPassword,
-        errorId: "confirm-password-error",
-      },
+      { field: password, validator: validatePassword, errorId: "password-error" },
+      { field: confirmPassword, validator: validateConfirmPassword, errorId: "confirm-password-error" },
       { field: age, validator: validateAge, errorId: "age-error" },
       { field: phone, validator: validatePhone, errorId: "phone-error" },
       { field: address, validator: validateAddress, errorId: "address-error" },
       { field: city, validator: validateCity, errorId: "city-error" },
-      {
-        field: postalCode,
-        validator: validatePostalCode,
-        errorId: "postal-code-error",
-      },
+      { field: postalCode, validator: validatePostalCode, errorId: "postal-code-error" },
       { field: dni, validator: validateDNI, errorId: "dni-error" },
     ];
 
@@ -143,6 +116,13 @@ window.onload = function () {
     if (hasError) {
       alert("Por favor, corrige los errores en el formulario.");
     } else {
+      for (var i = 0; i < fields.length; i++) {
+        var field = fields[i];
+        if (field.tagName === "INPUT") {
+          data[field.name] = field.value;
+        }
+      }
+
       var req = new XMLHttpRequest();
       req.open("POST", "https://jsonplaceholder.typicode.com/users", true);
       req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
