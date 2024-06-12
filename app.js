@@ -105,6 +105,41 @@ window.onload = function () {
       }
     }
 
+    var validators = [
+      {
+        field: fullName,
+        validator: validateFullName,
+        errorId: "full-name-error",
+      },
+      { field: email, validator: validateEmail, errorId: "email-error" },
+      {
+        field: password,
+        validator: validatePassword,
+        errorId: "password-error",
+      },
+      {
+        field: confirmPassword,
+        validator: validateConfirmPassword,
+        errorId: "confirm-password-error",
+      },
+      { field: age, validator: validateAge, errorId: "age-error" },
+      { field: phone, validator: validatePhone, errorId: "phone-error" },
+      { field: address, validator: validateAddress, errorId: "address-error" },
+      { field: city, validator: validateCity, errorId: "city-error" },
+      {
+        field: postalCode,
+        validator: validatePostalCode,
+        errorId: "postal-code-error",
+      },
+      { field: dni, validator: validateDNI, errorId: "dni-error" },
+    ];
+
+    validators.forEach(function (item) {
+      var error = item.validator(item.field.value);
+      document.getElementById(item.errorId).textContent = error;
+      if (error) hasError = true;
+    });
+
     if (hasError) {
       alert("Por favor, corrige los errores en el formulario.");
     } else {
