@@ -1,201 +1,157 @@
-var formulario = document.getElementById("subscription-form");
-var inputNombreCompleto = document.getElementById("full-name");
-var inputEmail = document.getElementById("email");
-var inputContraseña = document.getElementById("password");
-var inputConfirmarContraseña = document.getElementById("confirm-password");
-var inputEdad = document.getElementById("age");
-var inputTelefono = document.getElementById("phone");
-var inputDireccion = document.getElementById("address");
-var inputCiudad = document.getElementById("city");
-var inputCodigoPostal = document.getElementById("postal-code");
-var inputDNI = document.getElementById("dni");
+window.onload = function () {
+  var form = document.getElementById("subscription-form");
+  var fullName = document.getElementById("full-name");
+  var email = document.getElementById("email");
+  var password = document.getElementById("password");
+  var confirmPassword = document.getElementById("confirm-password");
+  var age = document.getElementById("age");
+  var phone = document.getElementById("phone");
+  var address = document.getElementById("address");
+  var city = document.getElementById("city");
+  var postalCode = document.getElementById("postal-code");
+  var dni = document.getElementById("dni");
+  var modal = document.getElementById("modal");
+  var modalMessage = document.getElementById("modal-message");
+  var closeButton = document.getElementById("close-button");
 
-var errorNombreCompleto = document.getElementById("full-name-error");
-var errorEmail = document.getElementById("email-error");
-var errorContraseña = document.getElementById("password-error");
-var errorConfirmarContraseña = document.getElementById(
-  "confirm-password-error"
-);
-var errorEdad = document.getElementById("age-error");
-var errorTelefono = document.getElementById("phone-error");
-var errorDireccion = document.getElementById("address-error");
-var errorCiudad = document.getElementById("city-error");
-var errorCodigoPostal = document.getElementById("postal-code-error");
-var errorDNI = document.getElementById("dni-error");
-
-function validarNombreCompleto() {
-  var nombreCompleto = inputNombreCompleto.value;
-  if (nombreCompleto.length <= 6 || nombreCompleto.indexOf(" ") === -1) {
-    errorNombreCompleto.textContent =
-      "El nombre completo debe tener más de 6 letras y al menos un espacio.";
-    return false;
-  } else {
-    errorNombreCompleto.textContent = "";
-    return true;
+  function validateField(field, validator, errorMessageId) {
+    field.onblur = function () {
+      var error = validator(field.value);
+      document.getElementById(errorMessageId).textContent = error ? error : "";
+    };
+    field.onfocus = function () {
+      document.getElementById(errorMessageId).textContent = "";
+    };
   }
-}
 
-function validarEmail() {
-  var email = inputEmail.value;
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    errorEmail.textContent = "El email debe tener un formato válido.";
-    return false;
-  } else {
-    errorEmail.textContent = "";
-    return true;
+  function validateFullName(value) {
+    return value.length > 6 && /\s/.test(value)
+      ? ""
+      : "El nombre debe tener más de 6 letras y un espacio.";
   }
-}
 
-function validarContraseña() {
-  var contraseña = inputContraseña.value;
-  if (
-    contraseña.length < 8 ||
-    !/\d/.test(contraseña) ||
-    !/[a-zA-Z]/.test(contraseña)
-  ) {
-    errorContraseña.textContent =
-      "La contraseña debe tener al menos 8 caracteres, formados por letras y números.";
-    return false;
-  } else {
-    errorContraseña.textContent = "";
-    return true;
+  function validateEmail(value) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(value) ? "" : "Debe ser un email válido.";
   }
-}
 
-function validarConfirmarContraseña() {
-  var contraseña = inputContraseña.value;
-  var confirmarContraseña = inputConfirmarContraseña.value;
-  if (contraseña !== confirmarContraseña) {
-    errorConfirmarContraseña.textContent = "Las contraseñas no coinciden.";
-    return false;
-  } else {
-    errorConfirmarContraseña.textContent = "";
-    return true;
+  function validatePassword(value) {
+    return value.length >= 8 && /[a-zA-Z]/.test(value) && /\d/.test(value)
+      ? ""
+      : "Debe tener al menos 8 caracteres, con letras y números.";
   }
-}
 
-function validarEdad() {
-  var edad = parseInt(inputEdad.value, 10);
-  if (isNaN(edad) || edad < 18) {
-    errorEdad.textContent =
-      "La edad debe ser un número entero mayor o igual a 18.";
-    return false;
-  } else {
-    errorEdad.textContent = "";
-    return true;
+  function validateConfirmPassword(value) {
+    return value === password.value ? "" : "Las contraseñas no coinciden.";
   }
-}
 
-function validarTelefono() {
-  var telefono = inputTelefono.value;
-  var telefonoRegex = /^\d{7,}$/;
-  if (!telefonoRegex.test(telefono)) {
-    errorTelefono.textContent =
-      "El teléfono debe ser un número de al menos 7 dígitos, sin espacios, guiones ni paréntesis.";
-    return false;
-  } else {
-    errorTelefono.textContent = "";
-    return true;
+  function validateAge(value) {
+    return value >= 18 ? "" : "Debe ser un número mayor o igual a 18.";
   }
-}
 
-function validarDireccion() {
-  var direccion = inputDireccion.value;
-  if (direccion.length < 5 || direccion.indexOf(" ") === -1) {
-    errorDireccion.textContent =
-      "La dirección debe tener al menos 5 caracteres, con letras, números y un espacio en el medio.";
-    return false;
-  } else {
-    errorDireccion.textContent = "";
-    return true;
+  function validatePhone(value) {
+    return /^\d{7,}$/.test(value)
+      ? ""
+      : "Debe tener al menos 7 dígitos, sin espacios ni símbolos.";
   }
-}
 
-function validarCiudad() {
-  var ciudad = inputCiudad.value;
-  if (ciudad.length < 3) {
-    errorCiudad.textContent = "La ciudad debe tener al menos 3 caracteres.";
-    return false;
-  } else {
-    errorCiudad.textContent = "";
-    return true;
+  function validateAddress(value) {
+    return value.length > 4 && /\s/.test(value)
+      ? ""
+      : "Debe tener al menos 5 caracteres y un espacio.";
   }
-}
 
-function validarCodigoPostal() {
-  var codigoPostal = inputCodigoPostal.value;
-  if (codigoPostal.length < 3) {
-    errorCodigoPostal.textContent =
-      "El código postal debe tener al menos 3 caracteres.";
-    return false;
-  } else {
-    errorCodigoPostal.textContent = "";
-    return true;
+  function validateCity(value) {
+    return value.length >= 3 ? "" : "Debe tener al menos 3 caracteres.";
   }
-}
 
-function validarDNI() {
-  var dni = inputDNI.value;
-  var dniRegex = /^\d{7,8}$/;
-  if (!dniRegex.test(dni)) {
-    errorDNI.textContent = "El DNI debe ser un número de 7 u 8 dígitos.";
-    return false;
-  } else {
-    errorDNI.textContent = "";
-    return true;
+  function validatePostalCode(value) {
+    return value.length >= 3 ? "" : "Debe tener al menos 3 caracteres.";
   }
-}
 
-var campos = [
-  { input: inputNombreCompleto, error: errorNombreCompleto },
-  { input: inputEmail, error: errorEmail },
-  { input: inputContraseña, error: errorContraseña },
-  { input: inputConfirmarContraseña, error: errorConfirmarContraseña },
-  { input: inputEdad, error: errorEdad },
-  { input: inputTelefono, error: errorTelefono },
-  { input: inputDireccion, error: errorDireccion },
-  { input: inputCiudad, error: errorCiudad },
-  { input: inputCodigoPostal, error: errorCodigoPostal },
-  { input: inputDNI, error: errorDNI },
-];
-
-campos.forEach(function (campo) {
-  campo.input.addEventListener("blur", function () {
-    validarCampo(campo);
-  });
-});
-
-function validarCampo(campo) {
-  if (campo.input.value.trim() === "") {
-    campo.error.textContent = "Este campo es obligatorio.";
-    return false; 
-  } else {
-    campo.error.textContent = "";
-    return true; 
+  function validateDNI(value) {
+    return /^\d{7,8}$/.test(value) ? "" : "Debe tener 7 u 8 dígitos.";
   }
-}
 
-formulario.addEventListener("submit", function (e) {
-  e.preventDefault();
-  var todoValido = true;
-  var mensajes = [];
+  validateField(fullName, validateFullName, "full-name-error");
+  validateField(email, validateEmail, "email-error");
+  validateField(password, validatePassword, "password-error");
+  validateField(
+    confirmPassword,
+    validateConfirmPassword,
+    "confirm-password-error"
+  );
+  validateField(age, validateAge, "age-error");
+  validateField(phone, validatePhone, "phone-error");
+  validateField(address, validateAddress, "address-error");
+  validateField(city, validateCity, "city-error");
+  validateField(postalCode, validatePostalCode, "postal-code-error");
+  validateField(dni, validateDNI, "dni-error");
 
-  campos.forEach(function (campo) {
-    if (!validarCampo(campo)) {
-      todoValido = false;
-      mensajes.push(campo.error.textContent);
+  form.onsubmit = function (event) {
+    event.preventDefault();
+    var hasError = false;
+    var data = {};
+    var fields = form.elements;
+
+    for (var i = 0; i < fields.length; i++) {
+      var field = fields[i];
+      if (field.tagName === "INPUT") {
+        var errorElement = document.getElementById(field.id + "-error");
+        if (errorElement.textContent) {
+          hasError = true;
+        }
+        data[field.name] = field.value;
+      }
     }
-  });
 
-  if (todoValido) {
-    var datosFormulario = campos
-      .map(function (campo) {
-        return campo.input.name.replace("-", " ") + ": " + campo.input.value;
-      })
-      .join("\n");
-    alert("Formulario enviado con éxito:" + datosFormulario);
-  } else {
-    alert("Errores en el formulario:" + mensajes.join("\n"));
+    if (hasError) {
+      alert("Por favor, corrige los errores en el formulario.");
+    } else {
+      var req = new XMLHttpRequest();
+      req.open("POST", "https://jsonplaceholder.typicode.com/users", true);
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+      req.onreadystatechange = function () {
+        if (req.readyState === 4) {
+          if (req.status === 201) {
+            var response = JSON.parse(req.responseText);
+            localStorage.setItem("userData", JSON.stringify(response));
+            modalMessage.textContent =
+              "Suscripción exitosa. Datos recibidos: " +
+              JSON.stringify(response, null, 2);
+          } else {
+            modalMessage.textContent =
+              "Error en la suscripción: " + req.status + " " + req.statusText;
+          }
+          modal.style.display = "block";
+        }
+      };
+
+      req.send(JSON.stringify(data));
+    }
+  };
+
+  closeButton.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  var savedData = localStorage.getItem("userData");
+  if (savedData) {
+    var userData = JSON.parse(savedData);
+    for (var key in userData) {
+      if (userData.hasOwnProperty(key)) {
+        var input = document.getElementsByName(key)[0];
+        if (input) {
+          input.value = userData[key];
+        }
+      }
+    }
   }
-});
+};
